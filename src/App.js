@@ -7,6 +7,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
+  //MUI styling
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
@@ -14,18 +15,45 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
+
 function App() {
-  const [disabled, setDisabled] = useState(true);
   const classes = useStyles();
+  const [disabled, setDisabled] = useState(true); //hook to set state of HM prop onclick
+  const [sampleSize, setSampleSize] = useState("");
+  const [sampleMean, setSampleMean] = useState("");
+  const [standardDeviation, setStandardDeviation] = useState("");
+  const [hypothesizedMean, setHypothesizedMean] = useState("");
+  const [sampleSizeError, setSampleSizeError] = useState(false);
+  const [sampleMeanError, setSampleMeanError] = useState(false);
+  const [standardDeviationError, setStandardDeviationError] = useState(false);
+  const [hypothesizedMeanError, HypothesizedMeanError] = useState(false);
+
+  const handleSubmit = evt => {
+    //handlesSubmit will have the callback validateForm
+    evt.preventDefault();
+    console.log("hello");
+  };
+
   return (
     <div className='App'>
-      <form className={classes.root} noValidate autoComplete='off'>
-        <TextField id='outlined-basic' label='Sample size' variant='outlined' />
-        <TextField id='outlined-basic' label='Sample mean' variant='outlined' />
+      <form className={classes.root} autoComplete='off'>
+        <TextField
+          id='outlined-basic'
+          label='Sample size'
+          variant='outlined'
+          error={sampleSizeError}
+        />
+        <TextField
+          id='outlined-basic'
+          label='Sample mean'
+          variant='outlined'
+          error={sampleMeanError}
+        />
         <TextField
           id='outlined-basic'
           label='Standard deviation'
           variant='outlined'
+          error={standardDeviationError}
         />
         <FormControlLabel
           control={
@@ -45,9 +73,10 @@ function App() {
           label='Hypothesized mean'
           variant='outlined'
           disabled={disabled}
+          error={standardDeviationError}
         />
         <div>
-          <Button variant='contained' color='primary'>
+          <Button variant='contained' color='primary' onClick={handleSubmit}>
             Submit
           </Button>
           <Button variant='contained' color='primary'>
