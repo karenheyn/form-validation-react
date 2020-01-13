@@ -8,7 +8,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-  //MUI styling
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
@@ -22,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
-  const [disabled, setDisabled] = useState(true); //setting inital states
+  const [disabled, setDisabled] = useState(true);
   const [sampleSize, setSampleSize] = useState("");
   const [sampleMean, setSampleMean] = useState("");
   const [standardDeviation, setStandardDeviation] = useState("");
@@ -61,13 +60,11 @@ function App() {
       setHypothesizedMeanError(false);
       return true;
     } else {
-      console.log("hooray its valid");
       return true;
     }
   };
 
   const handleSubmit = evt => {
-    //handlesSubmit will have the callback validateForm
     evt.preventDefault();
     isValid = validateForm();
 
@@ -75,7 +72,6 @@ function App() {
       setValid(true);
     }
   };
-  console.log(isValid);
 
   return (
     <div className='App'>
@@ -83,7 +79,6 @@ function App() {
       <div className='content'>
         <form className={classes.root} autoComplete='off'>
           <TextField
-            id='outlined-basic'
             label='Sample size'
             variant='outlined'
             value={sampleSize}
@@ -92,7 +87,6 @@ function App() {
             onChange={evt => setSampleSize(1 * evt.target.value)}
           />
           <TextField
-            id='outlined-basic'
             label='Sample mean'
             variant='outlined'
             value={sampleMean}
@@ -101,7 +95,6 @@ function App() {
             onChange={evt => setSampleMean(evt.target.value)}
           />
           <TextField
-            id='outlined-basic'
             label='Standard deviation'
             variant='outlined'
             value={standardDeviation}
@@ -127,7 +120,6 @@ function App() {
             label='Perform hypothesis test'
           />
           <TextField
-            id='outlined-basic'
             label='Hypothesized mean'
             variant='outlined'
             disabled={disabled}
@@ -157,7 +149,6 @@ function App() {
             </Button>
           </div>
         </form>
-
         {valid && (
           <div className='padding-control'>
             <DataTable
