@@ -115,7 +115,9 @@ function App() {
             <Checkbox
               onChange={
                 () =>
-                  disabled === true ? setDisabled(false) : setDisabled(true) //sets state of lower textfield
+                  disabled === true
+                    ? setDisabled(false)
+                    : (setDisabled(true), setHypothesizedMean("")) //sets state of lower textfield
               }
               value='checkedB'
               color='primary'
@@ -152,16 +154,17 @@ function App() {
           </Button>
         </div>
       </form>
-      <div>
-        {valid && (
+
+      {valid && (
+        <div className='padding-control'>
           <DataTable
             sampleSize={sampleSize}
             sampleMean={sampleMean}
             standardDeviation={standardDeviation}
             hypothesizedMean={hypothesizedMean}
           ></DataTable>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

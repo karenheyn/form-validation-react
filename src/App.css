@@ -1,18 +1,18 @@
 .App {
-  padding-top: 20px;
+  padding-top: 40px;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 form {
   margin-left: 10px;
-  width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.MuiTable-root {
-  max-width: 700px;
+.padding-control {
+  margin: 60px;
 }
