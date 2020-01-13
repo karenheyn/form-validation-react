@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
+import DataTable from "./table";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
+import { Tab } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   //MUI styling
@@ -12,6 +14,9 @@ const useStyles = makeStyles(theme => ({
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
       width: 200
+    },
+    "& .MuiButton-root": {
+      margin: theme.spacing(1.5)
     }
   }
 }));
@@ -27,7 +32,10 @@ function App() {
   const [sampleMeanError, setSampleMeanError] = useState(false);
   const [standardDeviationError, setStandardDeviationError] = useState(false);
   const [hypothesizedMeanError, setHypothesizedMeanError] = useState(false);
+  const [valid, setValid] = useState(false);
+
   let isValid;
+
   const validateForm = () => {
     if (sampleSize < 2 || Number.isInteger(sampleSize) === false) {
       setSampleSizeError(true);
@@ -63,8 +71,12 @@ function App() {
     //handlesSubmit will have the callback validateForm
     evt.preventDefault();
     isValid = validateForm();
-    isValid ? console.log("yay") : console.log("nayyyy");
+
+    if (isValid) {
+      setValid(true);
+    }
   };
+  console.log(isValid);
 
   return (
     <div className='App'>
@@ -73,27 +85,30 @@ function App() {
           id='outlined-basic'
           label='Sample size'
           variant='outlined'
+          value={sampleSize}
           error={sampleSizeError}
           helperText={sampleSizeError ? "must be a whole number >= 2" : null}
-          onChange={evt => setSampleSize(Number(evt.target.value))}
+          onChange={evt => setSampleSize(1 * evt.target.value)}
         />
         <TextField
           id='outlined-basic'
           label='Sample mean'
           variant='outlined'
+          value={sampleMean}
           error={sampleMeanError}
           helperText={sampleMeanError ? " must be a numeric value" : null}
-          onChange={evt => setSampleMean(Number(evt.target.value))}
+          onChange={evt => setSampleMean(evt.target.value)}
         />
         <TextField
           id='outlined-basic'
           label='Standard deviation'
           variant='outlined'
+          value={standardDeviation}
           error={standardDeviationError}
           helperText={
             standardDeviationError ? "must be a numeric value > 0" : null
           }
-          onChange={evt => setStandardDeviation(Number(evt.target.value))}
+          onChange={evt => setStandardDeviation(evt.target.value)}
         />
         <FormControlLabel
           control={
@@ -113,19 +128,40 @@ function App() {
           label='Hypothesized mean'
           variant='outlined'
           disabled={disabled}
+          value={hypothesizedMean}
           error={hypothesizedMeanError}
           helperText={hypothesizedMeanError ? "must be a numeric value" : null}
-          onChange={evt => setHypothesizedMean(Number(evt.target.value))}
+          onChange={evt => setHypothesizedMean(evt.target.value)}
         />
         <div>
           <Button variant='contained' color='primary' onClick={handleSubmit}>
             Submit
           </Button>
-          <Button variant='contained' color='primary'>
+          <Button
+            variant='contained'
+            color='default'
+            onClick={() => {
+              setHypothesizedMean("");
+              setSampleMean("");
+              setSampleSize("");
+              setStandardDeviation("");
+              setValid(false);
+            }}
+          >
             Reset
           </Button>
         </div>
       </form>
+      <div>
+        {valid && (
+          <DataTable
+            sampleSize={sampleSize}
+            sampleMean={sampleMean}
+            standardDeviation={standardDeviation}
+            hypothesizedMean={hypothesizedMean}
+          ></DataTable>
+        )}
+      </div>
     </div>
   );
 }
