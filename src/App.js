@@ -42,18 +42,23 @@ function App() {
           label='Sample size'
           variant='outlined'
           error={sampleSizeError}
+          helperText={sampleSizeError ? "must be a whole number >= 2" : null}
         />
         <TextField
           id='outlined-basic'
           label='Sample mean'
           variant='outlined'
           error={sampleMeanError}
+          helperText={sampleMeanError ? " must be a numeric value" : null}
         />
         <TextField
           id='outlined-basic'
           label='Standard deviation'
           variant='outlined'
           error={standardDeviationError}
+          helperText={
+            standardDeviationError ? "must be a numeric value > 0" : null
+          }
         />
         <FormControlLabel
           control={
@@ -74,6 +79,7 @@ function App() {
           variant='outlined'
           disabled={disabled}
           error={standardDeviationError}
+          helperText={standardDeviationError ? "must be a numeric value" : null}
         />
         <div>
           <Button variant='contained' color='primary' onClick={handleSubmit}>
