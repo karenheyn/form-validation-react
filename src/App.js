@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 function App() {
+  const [disabled, setDisabled] = useState(true);
   const classes = useStyles();
   return (
     <div className='App'>
@@ -30,7 +31,9 @@ function App() {
           control={
             <Checkbox
               // checked={state.checkedB}
-              // onChange={handleChange("checkedB")}
+              onChange={() =>
+                disabled === true ? setDisabled(false) : setDisabled(true)
+              }
               value='checkedB'
               color='primary'
             />
@@ -41,7 +44,7 @@ function App() {
           id='outlined-basic'
           label='Hypothesized mean'
           variant='outlined'
-          disabled
+          disabled={disabled}
         />
         <div>
           <Button variant='contained' color='primary'>
