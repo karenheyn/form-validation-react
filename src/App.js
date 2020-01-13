@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
-import { Tab } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   //MUI styling
