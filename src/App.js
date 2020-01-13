@@ -19,28 +19,40 @@ const useStyles = makeStyles(theme => ({
 function App() {
   const classes = useStyles();
   const [disabled, setDisabled] = useState(true); //setting inital states
-  const [sampleSize, setSampleSize] = useState(NaN);
-  const [sampleMean, setSampleMean] = useState(NaN);
-  const [standardDeviation, setStandardDeviation] = useState(NaN);
-  const [hypothesizedMean, setHypothesizedMean] = useState(NaN);
+  const [sampleSize, setSampleSize] = useState("");
+  const [sampleMean, setSampleMean] = useState("");
+  const [standardDeviation, setStandardDeviation] = useState("");
+  const [hypothesizedMean, setHypothesizedMean] = useState("");
   const [sampleSizeError, setSampleSizeError] = useState(false);
   const [sampleMeanError, setSampleMeanError] = useState(false);
   const [standardDeviationError, setStandardDeviationError] = useState(false);
   const [hypothesizedMeanError, setHypothesizedMeanError] = useState(false);
   let isValid;
   const validateForm = () => {
-    if (sampleSize < 2 || isNaN(sampleSize)) {
+    if (sampleSize < 2 || Number.isInteger(sampleSize) === false) {
       setSampleSizeError(true);
       return false;
-    } else if (isNaN(sampleMean)) {
+    } else if (sampleSize >= 2 || Number.isInteger(sampleSize)) {
+      setSampleSizeError(false);
+    }
+    if (isNaN(sampleMean) || sampleMean === "") {
       setSampleMeanError(true);
       return false;
-    } else if (standardDeviation <= 0 || isNaN(sampleSize)) {
+    } else if (isNaN(sampleMean) === false) {
+      setSampleMeanError(false);
+    }
+    if (isNaN(standardDeviation) || standardDeviation <= 0) {
       setStandardDeviationError(true);
       return false;
-    } else if (!disabled && isNaN(hypothesizedMean)) {
+    } else if (standardDeviation > 0 || isNaN(standardDeviation) === false) {
+      setStandardDeviationError(false);
+    }
+    if (!disabled && (isNaN(hypothesizedMean) || hypothesizedMean === "")) {
       setHypothesizedMeanError(true);
       return false;
+    } else if (disabled || isNaN(hypothesizedMean) === false) {
+      setHypothesizedMeanError(false);
+      return true;
     } else {
       console.log("hooray its valid");
       return true;
@@ -63,7 +75,7 @@ function App() {
           variant='outlined'
           error={sampleSizeError}
           helperText={sampleSizeError ? "must be a whole number >= 2" : null}
-          onChange={evt => setSampleSize(evt.target.value)}
+          onChange={evt => setSampleSize(Number(evt.target.value))}
         />
         <TextField
           id='outlined-basic'
@@ -71,7 +83,7 @@ function App() {
           variant='outlined'
           error={sampleMeanError}
           helperText={sampleMeanError ? " must be a numeric value" : null}
-          onChange={evt => setSampleMean(evt.target.value)}
+          onChange={evt => setSampleMean(Number(evt.target.value))}
         />
         <TextField
           id='outlined-basic'
@@ -81,7 +93,7 @@ function App() {
           helperText={
             standardDeviationError ? "must be a numeric value > 0" : null
           }
-          onChange={evt => setStandardDeviation(evt.target.value)}
+          onChange={evt => setStandardDeviation(Number(evt.target.value))}
         />
         <FormControlLabel
           control={
@@ -103,7 +115,7 @@ function App() {
           disabled={disabled}
           error={hypothesizedMeanError}
           helperText={hypothesizedMeanError ? "must be a numeric value" : null}
-          onChange={evt => setHypothesizedMean(evt.target.value)}
+          onChange={evt => setHypothesizedMean(Number(evt.target.value))}
         />
         <div>
           <Button variant='contained' color='primary' onClick={handleSubmit}>
