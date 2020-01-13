@@ -1,6 +1,6 @@
 # React Form Validator
 
-![form validator screenshot](./form_validator.png)
+![form validator screenshot](src/form_validator.png)
 
 ### About this project
 
