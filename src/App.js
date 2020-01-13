@@ -18,20 +18,40 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
-  const [disabled, setDisabled] = useState(true); //hook to set state of HM prop onclick
-  const [sampleSize, setSampleSize] = useState("");
-  const [sampleMean, setSampleMean] = useState("");
-  const [standardDeviation, setStandardDeviation] = useState("");
-  const [hypothesizedMean, setHypothesizedMean] = useState("");
+  const [disabled, setDisabled] = useState(true); //setting inital states
+  const [sampleSize, setSampleSize] = useState(NaN);
+  const [sampleMean, setSampleMean] = useState(NaN);
+  const [standardDeviation, setStandardDeviation] = useState(NaN);
+  const [hypothesizedMean, setHypothesizedMean] = useState(NaN);
   const [sampleSizeError, setSampleSizeError] = useState(false);
   const [sampleMeanError, setSampleMeanError] = useState(false);
   const [standardDeviationError, setStandardDeviationError] = useState(false);
-  const [hypothesizedMeanError, HypothesizedMeanError] = useState(false);
+  const [hypothesizedMeanError, setHypothesizedMeanError] = useState(false);
+  let isValid;
+  const validateForm = () => {
+    if (sampleSize < 2 || isNaN(sampleSize)) {
+      setSampleSizeError(true);
+      return false;
+    } else if (isNaN(sampleMean)) {
+      setSampleMeanError(true);
+      return false;
+    } else if (standardDeviation <= 0 || isNaN(sampleSize)) {
+      setStandardDeviationError(true);
+      return false;
+    } else if (!disabled && isNaN(hypothesizedMean)) {
+      setHypothesizedMeanError(true);
+      return false;
+    } else {
+      console.log("hooray its valid");
+      return true;
+    }
+  };
 
   const handleSubmit = evt => {
     //handlesSubmit will have the callback validateForm
     evt.preventDefault();
-    console.log("hello");
+    isValid = validateForm();
+    isValid ? console.log("yay") : console.log("nayyyy");
   };
 
   return (
@@ -43,6 +63,7 @@ function App() {
           variant='outlined'
           error={sampleSizeError}
           helperText={sampleSizeError ? "must be a whole number >= 2" : null}
+          onChange={evt => setSampleSize(evt.target.value)}
         />
         <TextField
           id='outlined-basic'
@@ -50,6 +71,7 @@ function App() {
           variant='outlined'
           error={sampleMeanError}
           helperText={sampleMeanError ? " must be a numeric value" : null}
+          onChange={evt => setSampleMean(evt.target.value)}
         />
         <TextField
           id='outlined-basic'
@@ -59,13 +81,14 @@ function App() {
           helperText={
             standardDeviationError ? "must be a numeric value > 0" : null
           }
+          onChange={evt => setStandardDeviation(evt.target.value)}
         />
         <FormControlLabel
           control={
             <Checkbox
-              // checked={state.checkedB}
-              onChange={() =>
-                disabled === true ? setDisabled(false) : setDisabled(true)
+              onChange={
+                () =>
+                  disabled === true ? setDisabled(false) : setDisabled(true) //sets state of lower textfield
               }
               value='checkedB'
               color='primary'
@@ -78,8 +101,9 @@ function App() {
           label='Hypothesized mean'
           variant='outlined'
           disabled={disabled}
-          error={standardDeviationError}
-          helperText={standardDeviationError ? "must be a numeric value" : null}
+          error={hypothesizedMeanError}
+          helperText={hypothesizedMeanError ? "must be a numeric value" : null}
+          onChange={evt => setHypothesizedMean(evt.target.value)}
         />
         <div>
           <Button variant='contained' color='primary' onClick={handleSubmit}>
