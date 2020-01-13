@@ -1,5 +1,7 @@
 # React Form Validator
 
+![form validator screenshot](./form_validator.png)
+
 ### About this project
 
 This simple responsive application consists of a form that accepts either 3 or 4 arguments and validates their input. The arguments are as follows:
