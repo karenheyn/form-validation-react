@@ -30,3 +30,7 @@ I decided to use this project to familiarize myself with react hooks and materia
 - Javascript
 - React JS
 - Material UI
+
+### Deployed Version
+
+[react form validator](https://condescending-bartik-65ba64.netlify.com/)
