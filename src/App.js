@@ -80,91 +80,96 @@ function App() {
 
   return (
     <div className='App'>
-      <form className={classes.root} autoComplete='off'>
-        <TextField
-          id='outlined-basic'
-          label='Sample size'
-          variant='outlined'
-          value={sampleSize}
-          error={sampleSizeError}
-          helperText={sampleSizeError ? "must be a whole number >= 2" : null}
-          onChange={evt => setSampleSize(1 * evt.target.value)}
-        />
-        <TextField
-          id='outlined-basic'
-          label='Sample mean'
-          variant='outlined'
-          value={sampleMean}
-          error={sampleMeanError}
-          helperText={sampleMeanError ? " must be a numeric value" : null}
-          onChange={evt => setSampleMean(evt.target.value)}
-        />
-        <TextField
-          id='outlined-basic'
-          label='Standard deviation'
-          variant='outlined'
-          value={standardDeviation}
-          error={standardDeviationError}
-          helperText={
-            standardDeviationError ? "must be a numeric value > 0" : null
-          }
-          onChange={evt => setStandardDeviation(evt.target.value)}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              onChange={
-                () =>
-                  disabled === true
-                    ? setDisabled(false)
-                    : (setDisabled(true), setHypothesizedMean("")) //sets state of lower textfield
-              }
-              value='checkedB'
-              color='primary'
-            />
-          }
-          label='Perform hypothesis test'
-        />
-        <TextField
-          id='outlined-basic'
-          label='Hypothesized mean'
-          variant='outlined'
-          disabled={disabled}
-          value={hypothesizedMean}
-          error={hypothesizedMeanError}
-          helperText={hypothesizedMeanError ? "must be a numeric value" : null}
-          onChange={evt => setHypothesizedMean(evt.target.value)}
-        />
-        <div>
-          <Button variant='contained' color='primary' onClick={handleSubmit}>
-            Submit
-          </Button>
-          <Button
-            variant='contained'
-            color='default'
-            onClick={() => {
-              setHypothesizedMean("");
-              setSampleMean("");
-              setSampleSize("");
-              setStandardDeviation("");
-              setValid(false);
-            }}
-          >
-            Reset
-          </Button>
-        </div>
-      </form>
+      <h1>React Form Validator</h1>
+      <div className='content'>
+        <form className={classes.root} autoComplete='off'>
+          <TextField
+            id='outlined-basic'
+            label='Sample size'
+            variant='outlined'
+            value={sampleSize}
+            error={sampleSizeError}
+            helperText={sampleSizeError ? "must be a whole number >= 2" : null}
+            onChange={evt => setSampleSize(1 * evt.target.value)}
+          />
+          <TextField
+            id='outlined-basic'
+            label='Sample mean'
+            variant='outlined'
+            value={sampleMean}
+            error={sampleMeanError}
+            helperText={sampleMeanError ? " must be a numeric value" : null}
+            onChange={evt => setSampleMean(evt.target.value)}
+          />
+          <TextField
+            id='outlined-basic'
+            label='Standard deviation'
+            variant='outlined'
+            value={standardDeviation}
+            error={standardDeviationError}
+            helperText={
+              standardDeviationError ? "must be a numeric value > 0" : null
+            }
+            onChange={evt => setStandardDeviation(evt.target.value)}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                onChange={
+                  () =>
+                    disabled === true
+                      ? setDisabled(false)
+                      : (setDisabled(true), setHypothesizedMean("")) //sets state of lower textfield
+                }
+                value='checkedB'
+                color='primary'
+              />
+            }
+            label='Perform hypothesis test'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Hypothesized mean'
+            variant='outlined'
+            disabled={disabled}
+            value={hypothesizedMean}
+            error={hypothesizedMeanError}
+            helperText={
+              hypothesizedMeanError ? "must be a numeric value" : null
+            }
+            onChange={evt => setHypothesizedMean(evt.target.value)}
+          />
+          <div>
+            <Button variant='contained' color='primary' onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Button
+              variant='contained'
+              color='default'
+              onClick={() => {
+                setHypothesizedMean("");
+                setSampleMean("");
+                setSampleSize("");
+                setStandardDeviation("");
+                setValid(false);
+              }}
+            >
+              Reset
+            </Button>
+          </div>
+        </form>
 
-      {valid && (
-        <div className='padding-control'>
-          <DataTable
-            sampleSize={sampleSize}
-            sampleMean={sampleMean}
-            standardDeviation={standardDeviation}
-            hypothesizedMean={hypothesizedMean}
-          ></DataTable>
-        </div>
-      )}
+        {valid && (
+          <div className='padding-control'>
+            <DataTable
+              sampleSize={sampleSize}
+              sampleMean={sampleMean}
+              standardDeviation={standardDeviation}
+              hypothesizedMean={hypothesizedMean}
+            ></DataTable>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
